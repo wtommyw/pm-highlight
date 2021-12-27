@@ -71,7 +71,6 @@ public class PmHighlightPlugin extends Plugin
         String configJson = configManager.getConfiguration(CONFIG_GROUP_NAME, CONFIG_KEY);
         loadConfig(configJson);
 
-        // TODO: replace icon
         final BufferedImage icon = ImageUtil.loadImageResource(getClass(), "/icon_marker.png");
 
         pluginPanel.rebuild();

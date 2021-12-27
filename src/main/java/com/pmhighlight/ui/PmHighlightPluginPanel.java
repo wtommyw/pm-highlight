@@ -56,16 +56,6 @@ public class PmHighlightPluginPanel extends PluginPanel
             public void mouseReleased(MouseEvent e) {
                 showSettingCreationPanel(true);
             }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                super.mouseEntered(e); //TODO: icon
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-                super.mouseExited(e); // TODO: icon
-            }
         });
         northPanel.add(addPlayerSettings, BorderLayout.EAST);
 
