@@ -12,7 +12,7 @@ public interface PmHighlightConfig extends Config
     @ConfigItem(
             keyName = "highlightUsername",
             name = "Highlight username default",
-            description = "",
+            description = "Whether or not to highlight the player name by default",
             position = 14
     )
     default boolean highlightUsernameDefault() { return true; }
@@ -20,7 +20,7 @@ public interface PmHighlightConfig extends Config
     @ConfigItem(
             keyName = "highlightMessage",
             name = "Highlight message default",
-            description = "",
+            description = "Whether or not to highlight the message by default",
             position = 14
     )
     default boolean highlightMessageDefault() { return true; }
@@ -28,7 +28,7 @@ public interface PmHighlightConfig extends Config
     @ConfigItem(
             keyName = "highlightLog",
             name = "Highlight log message default",
-            description = "",
+            description = "Whether or not to highlight the log in/out message by default",
             position = 14
     )
     default boolean highlightLoggedInOutDefault() { return true; }
@@ -36,8 +36,8 @@ public interface PmHighlightConfig extends Config
     @ConfigItem(
             keyName = "color",
             name = "Default color",
-            description = "Set the default highlight color",
+            description = "Default color to use for highlights",
             position = 14
     )
-    default Color defaultColor() { return Color.ORANGE; }
+    default Color defaultColor() { return Color.decode("25E84A"); }
 }
