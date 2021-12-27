@@ -91,7 +91,7 @@ public class PlayerSettingsPanel extends JPanel
 
         panel.setBackground(ColorScheme.DARKER_GRAY_COLOR);
         JLabel settingsTitle = new JLabel("Settings");
-        settingsTitle.setBorder(new EmptyBorder(10, 5, 5, 0));
+        settingsTitle.setBorder(new EmptyBorder(10, 5, 5, 5));
         panel.add(settingsTitle, constraints);
         constraints.gridy++;
 
@@ -100,15 +100,17 @@ public class PlayerSettingsPanel extends JPanel
         constraints.gridy++;
 
         JLabel colorTile = new JLabel("Colors");
-        colorTile.setBorder(new EmptyBorder(10, 0, 5, 0));
+        colorTile.setBorder(new EmptyBorder(10, 0, 5, 5));
         panel.add(colorTile, constraints);
         constraints.gridy++;
 
         JPanel colorPanel = createColorDetailsPanel();
+        colorPanel.setBorder(new EmptyBorder(0, 5, 5, 5));
         panel.add(colorPanel, constraints);
         constraints.gridy++;
 
         JPanel actionsPanel = createActionPanel();
+        actionsPanel.setBorder(new EmptyBorder(10, 5, 5, 5));
         panel.add(actionsPanel, constraints);
 
         return panel;

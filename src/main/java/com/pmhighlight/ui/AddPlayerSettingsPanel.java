@@ -52,7 +52,7 @@ public class AddPlayerSettingsPanel extends JPanel
 
         JPanel inputPanel = new JPanel(new GridLayout(4, 2, 8, 8));
 
-        inputPanel.setBorder(new EmptyBorder(0, 10, 10, 5));
+        inputPanel.setBorder(new EmptyBorder(10, 5, 5, 5));
         inputPanel.setBackground(ColorScheme.DARKER_GRAY_COLOR);
 
         nameInputLabel.setText("Player name:");
@@ -115,6 +115,7 @@ public class AddPlayerSettingsPanel extends JPanel
         constraints.gridy++;
 
         JPanel actionsPanel = createActionsPanel();
+        actionsPanel.setBorder(new EmptyBorder(10, 5, 5, 5));
         add(actionsPanel, constraints);
     }
 
