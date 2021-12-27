@@ -29,7 +29,8 @@ import java.util.regex.Pattern;
 
 @PluginDescriptor(
         name = "PM Highlight",
-        description = "Testing"
+        description = "Highlight private messages in different colors for certain players",
+        tags = {"highlight", "color", "private", "chat", "friends"}
 )
 public class PmHighlightPlugin extends Plugin
 {
