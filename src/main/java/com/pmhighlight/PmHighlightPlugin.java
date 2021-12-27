@@ -33,7 +33,6 @@ import java.util.regex.Pattern;
 )
 public class PmHighlightPlugin extends Plugin
 {
-
     @Inject
     protected ClientToolbar clientToolbar;
 
@@ -73,7 +72,7 @@ public class PmHighlightPlugin extends Plugin
         loadConfig(configJson);
 
         // TODO: replace icon
-        final BufferedImage icon = ImageUtil.loadImageResource(getClass(), "/config_icon.png");
+        final BufferedImage icon = ImageUtil.loadImageResource(getClass(), "/icon_marker.png");
 
         pluginPanel.rebuild();
         navigationButton = NavigationButton.builder()
@@ -130,9 +129,6 @@ public class PmHighlightPlugin extends Plugin
         if ( type == ChatMessageType.PRIVATECHAT || type == ChatMessageType.PRIVATECHATOUT ) {
             MessageNode messageNode = message.getMessageNode();
             String playerName = messageNode.getName();
-            System.out.println(playerName);
-
-            System.out.println(playerSettingsMap.containsKey(playerName));
 
             if ( playerSettingsMap.containsKey(playerName)) {
                 PlayerSettings settings = playerSettingsMap.get(playerName);
@@ -152,6 +148,12 @@ public class PmHighlightPlugin extends Plugin
         }
     }
 
+    /**
+     * Wrap a string with color tags.
+     * @param text The text to wrap
+     * @param color Color to wrap the text with
+     * @return String
+     */
     private String wrapWithColorTags(String text, Color color)
     {
         return ColorUtil.wrapWithColorTag(
@@ -169,16 +171,28 @@ public class PmHighlightPlugin extends Plugin
         return config.defaultColor();
     }
 
+    /**
+     * Get the default value for weather the name should be highlighted
+     * @return boolean
+     */
     public boolean getDefaultNameHighlightSetting()
     {
         return config.highlightUsernameDefault();
     }
 
+    /**
+     * Get the default value for weather the message should be highlighted
+     * @return boolean
+     */
     public boolean getDefaultMessageHighlightSetting()
     {
         return config.highlightMessageDefault();
     }
 
+    /**
+     * Get the default value for weather the log in/out message should be highlighted
+     * @return boolean
+     */
     public boolean getDefaultLogNHighlightSetting()
     {
         return config.highlightLoggedInOutDefault();
@@ -202,11 +216,18 @@ public class PmHighlightPlugin extends Plugin
         }
     }
 
+    /**
+     * Helper to enable/disable the new user creation panel.
+     * @param show show Whether or not to show the panel.
+     */
     public void setSettingsCreationPanelState(boolean show)
     {
         pluginPanel.showSettingCreationPanel(show);
     }
 
+    /**
+     * Update the config with player settings, this converts the map from memory into a json string.
+     */
     public void updateConfig()
     {
         if (playerSettingsMap.isEmpty()) {
@@ -218,6 +239,10 @@ public class PmHighlightPlugin extends Plugin
         }
     }
 
+    /**
+     * Load the player settings map from a json string
+     * @param json JSON stringified map that contains player settings.
+     */
     private void loadConfig(String json)
     {
         playerSettingsMap.clear();

@@ -9,7 +9,6 @@ import java.awt.Color;
 @AllArgsConstructor
 public class PlayerSettings
 {
-//    private String playerName;
     private String nameColor;
     private String messageColor;
     private String logColor;

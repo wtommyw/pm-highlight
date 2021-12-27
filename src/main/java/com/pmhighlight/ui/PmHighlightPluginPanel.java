@@ -6,17 +6,20 @@ import lombok.Getter;
 import net.runelite.client.ui.ColorScheme;
 import net.runelite.client.ui.PluginPanel;
 import net.runelite.client.ui.components.PluginErrorPanel;
+import net.runelite.client.util.ImageUtil;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
 import java.util.HashMap;
 
 public class PmHighlightPluginPanel extends PluginPanel
 {
-    private final JLabel addPlayerSettings = new JLabel("\u2795");
+    private static final ImageIcon ICON_ADD;
+    private final JLabel addPlayerSettings = new JLabel(ICON_ADD);
     private final JPanel configView = new JPanel(new GridBagLayout());
     private final PluginErrorPanel noPlayerSettingsPanel = new PluginErrorPanel();
     private final JLabel title = new JLabel();
@@ -24,6 +27,12 @@ public class PmHighlightPluginPanel extends PluginPanel
 
     @Getter
     private AddPlayerSettingsPanel addPlayerSettingsPanel;
+
+    static
+    {
+        final BufferedImage icon = ImageUtil.loadImageResource(PmHighlightPluginPanel.class, "/icon_add.png");
+        ICON_ADD = new ImageIcon(icon);
+    }
 
     public PmHighlightPluginPanel(PmHighlightPlugin plugin)
     {
@@ -70,7 +79,6 @@ public class PmHighlightPluginPanel extends PluginPanel
         constraints.gridx = 0;
         constraints.gridy = 0;
 
-        // TODO: text
         noPlayerSettingsPanel.setContent("PM Highlights", "No players configured");
         noPlayerSettingsPanel.setVisible(false);
         configView.add(noPlayerSettingsPanel, constraints);
