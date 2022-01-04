@@ -1,5 +1,8 @@
 # Pm Highlight
 
+> *Not receiving any messages?*  
+> Try setting private chat to "show all", since the username is wrapped witch `col` tags it might not be recognised as a friend.
+
 A plugin for [RuneLite](https://runelite.net/) that gives you the ability to highlight private messages from certain players.
 
 Using this plugin you can:
