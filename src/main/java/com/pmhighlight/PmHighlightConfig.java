@@ -39,5 +39,5 @@ public interface PmHighlightConfig extends Config
             description = "Default color to use for highlights",
             position = 14
     )
-    default Color defaultColor() { return Color.decode("25E84A"); }
+    default Color defaultColor() { return Color.GREEN; }
 }
