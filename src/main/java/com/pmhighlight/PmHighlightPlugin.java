@@ -18,6 +18,7 @@ import net.runelite.client.ui.NavigationButton;
 import net.runelite.client.ui.components.colorpicker.ColorPickerManager;
 import net.runelite.client.util.ColorUtil;
 import net.runelite.client.util.ImageUtil;
+import net.runelite.client.util.Text;
 
 import javax.inject.Inject;
 import java.awt.*;
@@ -129,6 +130,7 @@ public class PmHighlightPlugin extends Plugin
         if ( type == ChatMessageType.PRIVATECHAT || type == ChatMessageType.PRIVATECHATOUT ) {
             MessageNode messageNode = message.getMessageNode();
             String playerName = messageNode.getName();
+            playerName = Text.toJagexName(playerName);
 
             if ( playerSettingsMap.containsKey(playerName)) {
                 PlayerSettings settings = playerSettingsMap.get(playerName);
@@ -142,9 +144,7 @@ public class PmHighlightPlugin extends Plugin
                     Color messageColor = Color.decode(settings.getMessageColor());
                     messageNode.setValue(wrapWithColorTags(messageNode.getValue(), messageColor));
                 }
-
             }
-
         }
     }
 
