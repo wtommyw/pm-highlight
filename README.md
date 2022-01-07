@@ -1,4 +1,4 @@
-# Pm Highlight
+# Pm Highlight [![](https://img.shields.io/endpoint?url=https://i.pluginhub.info/shields/installs/plugin/pm-highlight)](https://runelite.net/plugin-hub)
 
 > *Not receiving any messages?*  
 > Try setting private chat to "show all", since the username is wrapped with `col` tags it might not be recognised as a friend.
