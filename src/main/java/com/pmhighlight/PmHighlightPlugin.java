@@ -111,6 +111,7 @@ public class PmHighlightPlugin extends Plugin
 
             if ( matcher.find() ) {
                 String playerName = matcher.group(1);
+                playerName = Text.toJagexName(playerName);
 
                 if ( playerSettingsMap.containsKey(playerName) ) {
                     PlayerSettings settings = playerSettingsMap.get(playerName);
