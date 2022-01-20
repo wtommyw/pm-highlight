@@ -56,8 +56,10 @@ public class PmHighlightPlugin extends Plugin
 
     private static final String CONFIG_GROUP_NAME = "pmhighlight";
     private static final String CONFIG_KEY = "playersettings";
-    private static final String LOG_REGEX = "(.*)\\shas\\slogged\\s(in|out).";
+    private static final String LOG_REGEX = "(?<name>.+)\\shas\\slogged\\s(?<method>in|out).";
+    private static final String NAME_REGEX = "(?<icon>\\<img=\\d+>)?(?<name>.*)";
     private Pattern logPattern;
+    private Pattern namePattern;
 
     @Provides
     PmHighlightConfig getConfig(ConfigManager configManager)
@@ -69,6 +71,7 @@ public class PmHighlightPlugin extends Plugin
     protected void startUp() throws Exception
     {
         logPattern = Pattern.compile(LOG_REGEX);
+        namePattern = Pattern.compile(NAME_REGEX);
         pluginPanel = new PmHighlightPluginPanel(this);
         String configJson = configManager.getConfiguration(CONFIG_GROUP_NAME, CONFIG_KEY);
         loadConfig(configJson);
@@ -90,7 +93,7 @@ public class PmHighlightPlugin extends Plugin
     @Override
     protected void shutDown()
     {
-        updateConfig(); // Save config in case anything was not saved...
+        updateConfig();
         clientToolbar.removeNavigation(navigationButton);
         playerSettingsMap.clear();
         pluginPanel = null;
@@ -107,21 +110,22 @@ public class PmHighlightPlugin extends Plugin
          */
         if ( type == ChatMessageType.LOGINLOGOUTNOTIFICATION ) {
             MessageNode messageNode = message.getMessageNode();
-            Matcher matcher = logPattern.matcher(messageNode.getValue());
+            Matcher logMatcher = logPattern.matcher(messageNode.getValue());
 
-            if ( matcher.find() ) {
-                String playerName = matcher.group(1);
-                playerName = Text.toJagexName(playerName);
+            if ( logMatcher.find() ) {
+                if ( logMatcher.group("name") != null ) {
+                    String playerName = logMatcher.group("name");
+                    playerName = Text.toJagexName(playerName);
 
-                if ( playerSettingsMap.containsKey(playerName) ) {
-                    PlayerSettings settings = playerSettingsMap.get(playerName);
+                    if ( playerSettingsMap.containsKey(playerName) ) {
+                        PlayerSettings settings = playerSettingsMap.get(playerName);
 
-                    if ( settings.isLogHighlightEnabled() ) {
-                        Color color = Color.decode(settings.getLogColor());
-                        messageNode.setValue(wrapWithColorTags(messageNode.getValue(), color));
+                        if ( settings.isLogHighlightEnabled() ) {
+                            Color color = Color.decode(settings.getLogColor());
+                            messageNode.setValue(wrapWithColorTags(messageNode.getValue(), color));
+                        }
                     }
                 }
-
             }
         }
 
@@ -130,20 +134,40 @@ public class PmHighlightPlugin extends Plugin
          */
         if ( type == ChatMessageType.PRIVATECHAT || type == ChatMessageType.PRIVATECHATOUT ) {
             MessageNode messageNode = message.getMessageNode();
-            String playerName = messageNode.getName();
-            playerName = Text.toJagexName(playerName);
 
-            if ( playerSettingsMap.containsKey(playerName)) {
-                PlayerSettings settings = playerSettingsMap.get(playerName);
+            String messageName = Text.toJagexName(messageNode.getName());
+            Matcher nameMatcher = namePattern.matcher(messageName);
 
-                if ( settings.isNameHighlightEnabled() ) {
-                    Color nameColor = Color.decode(settings.getNameColor());
-                    messageNode.setName(wrapWithColorTags(messageNode.getName(), nameColor));
+            String icon = "";
+            String playerName = "";
+
+            if (nameMatcher.find() ) {
+                if ( nameMatcher.group("icon") != null ) {
+                    icon = nameMatcher.group("icon");
                 }
 
-                if ( settings.isMessageHighlightEnabled() ) {
-                    Color messageColor = Color.decode(settings.getMessageColor());
-                    messageNode.setValue(wrapWithColorTags(messageNode.getValue(), messageColor));
+                if ( nameMatcher.group("name") != null ) {
+                    playerName = nameMatcher.group("name");
+                }
+
+                if ( playerSettingsMap.containsKey(playerName)) {
+                    PlayerSettings settings = playerSettingsMap.get(playerName);
+
+                    if ( settings.isNameHighlightEnabled() ) {
+                        Color nameColor = Color.decode(settings.getNameColor());
+                        String coloredName = wrapWithColorTags(playerName, nameColor);
+
+                        // Prepend name with the icon if it was set
+                        if (!icon.isEmpty()) {
+                            coloredName = icon + coloredName;
+                        }
+                        messageNode.setName(wrapWithColorTags(coloredName, nameColor));
+                    }
+
+                    if ( settings.isMessageHighlightEnabled() ) {
+                        Color messageColor = Color.decode(settings.getMessageColor());
+                        messageNode.setValue(wrapWithColorTags(messageNode.getValue(), messageColor));
+                    }
                 }
             }
         }
