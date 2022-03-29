@@ -105,7 +105,7 @@ public class PmHighlightPlugin extends Plugin
     {
         ChatMessageType type = message.getType();
 
-        /**
+        /*
          * Update log in/out message.
          */
         if ( type == ChatMessageType.LOGINLOGOUTNOTIFICATION ) {
@@ -129,10 +129,21 @@ public class PmHighlightPlugin extends Plugin
             }
         }
 
-        /**
-         * Update in-/out- going messages.
+        /*
+         * Check whether the message is either a private chat message, allow messages with the following types to
+         * be coloured:
+         *  - PRIVATECHAT: incomming private messages
+         *  - PRIVATECHATOUT: outgoing private messages
+         *  - FRIENDSCHAT: friends chat messages TODO: check if this is both incomming and outgoing
+         *  - CLAN_CHAT: clan chat messages TODO: check if this is both incomming and outgoing
+         *
+         * TODO: add options to enable / disable friends and clan chat highlighting
          */
-        if ( type == ChatMessageType.PRIVATECHAT || type == ChatMessageType.PRIVATECHATOUT ) {
+        if ( type == ChatMessageType.PRIVATECHAT ||
+             type == ChatMessageType.PRIVATECHATOUT ||
+             type == ChatMessageType.FRIENDSCHAT ||
+             type == ChatMessageType.CLAN_CHAT ) {
+
             MessageNode messageNode = message.getMessageNode();
 
             String messageName = Text.toJagexName(messageNode.getName());
@@ -171,6 +182,11 @@ public class PmHighlightPlugin extends Plugin
                 }
             }
         }
+
+        /*
+         * TODO: investigate if notifications in the clan/friends chat can be coloroued and
+         *  what type they are.
+         */
     }
 
     /**
