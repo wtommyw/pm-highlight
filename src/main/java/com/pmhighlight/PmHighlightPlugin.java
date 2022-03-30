@@ -161,6 +161,7 @@ public class PmHighlightPlugin extends Plugin
                     playerName = nameMatcher.group("name");
                 }
 
+                // TODO: check for group settings
                 if ( playerSettingsMap.containsKey(playerName)) {
                     PlayerSettings settings = playerSettingsMap.get(playerName);
 
