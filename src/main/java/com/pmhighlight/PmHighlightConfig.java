@@ -40,4 +40,14 @@ public interface PmHighlightConfig extends Config
             position = 14
     )
     default Color defaultColor() { return Color.GREEN; }
+
+    @ConfigItem(
+            keyName = "notifyOnLogin",
+            name = "Notify on log in",
+            description = "Default notification setting",
+            position = 14
+    )
+    default boolean notifyOnLogin() {
+        return false;
+    }
 }
