@@ -165,4 +165,11 @@ public class AddPlayerSettingsPanel extends JPanel
         colorPicker.setVisible(true);
     }
 
+    /**
+     * REset the name input field's text
+     */
+    public void resetNameField()
+    {
+        nameInputField.setText("");
+    }
 }

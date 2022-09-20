@@ -126,6 +126,9 @@ public class PmHighlightPluginPanel extends PluginPanel
 
         addPlayerSettingsPanel.setVisible(show);
         addPlayerSettings.setVisible(!show);
+        if (show) {
+            addPlayerSettingsPanel.resetNameField();
+        }
     }
 
 }
