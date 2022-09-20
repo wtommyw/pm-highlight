@@ -36,6 +36,8 @@ public class PlayerSettingsPanel extends JPanel
     private RuneliteColorPicker logColorPicker;
     private JCheckBox logHighlightSettingCheckbox;
 
+    private JCheckBox notifyOnLoginCheckbox;
+
     public PlayerSettingsPanel(PmHighlightPlugin plugin, String playerName, PlayerSettings settings)
     {
         this.plugin = plugin;
@@ -118,7 +120,7 @@ public class PlayerSettingsPanel extends JPanel
 
     private JPanel createSettingsPanel()
     {
-        JPanel settingsPanel = new JPanel(new GridLayout(3, 1));
+        JPanel settingsPanel = new JPanel(new GridLayout(4, 1));
         settingsPanel.setBackground(ColorScheme.DARKER_GRAY_COLOR);
 
         nameHighlightSettingCheckbox = new JCheckBox("Highlight name");
@@ -154,9 +156,21 @@ public class PlayerSettingsPanel extends JPanel
             plugin.updateConfig();
         });
 
+        notifyOnLoginCheckbox = new JCheckBox("Notify on login");
+        notifyOnLoginCheckbox.setSelected(settings.isNotifyOnLogin());
+        notifyOnLoginCheckbox.addItemListener(event -> {
+            int state = event.getStateChange();
+
+            boolean enabled = state == 1;
+            settings.setNotifyOnLogin(enabled);
+            plugin.updatePlayerSettings(playerName, settings);
+            plugin.updateConfig();
+        });
+
         settingsPanel.add(nameHighlightSettingCheckbox);
         settingsPanel.add(messageHighlightSettingCheckbox);
         settingsPanel.add(logHighlightSettingCheckbox);
+        settingsPanel.add(notifyOnLoginCheckbox);
 
         return settingsPanel;
     }
@@ -319,4 +333,5 @@ public class PlayerSettingsPanel extends JPanel
 
         colorPicker.setVisible(true);
     }
+
 }

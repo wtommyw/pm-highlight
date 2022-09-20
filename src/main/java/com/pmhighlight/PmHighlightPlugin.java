@@ -19,7 +19,7 @@ import net.runelite.client.ui.components.colorpicker.ColorPickerManager;
 import net.runelite.client.util.ColorUtil;
 import net.runelite.client.util.ImageUtil;
 import net.runelite.client.util.Text;
-
+import net.runelite.client.Notifier;
 import javax.inject.Inject;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -46,6 +46,10 @@ public class PmHighlightPlugin extends Plugin
 
     @Inject
     private ConfigManager configManager;
+
+    @Inject
+    private Notifier notifier;
+
 
     @Getter
     private final HashMap<String, PlayerSettings> playerSettingsMap = new HashMap();
@@ -123,6 +127,10 @@ public class PmHighlightPlugin extends Plugin
                         if ( settings.isLogHighlightEnabled() ) {
                             Color color = Color.decode(settings.getLogColor());
                             messageNode.setValue(wrapWithColorTags(messageNode.getValue(), color));
+                        }
+
+                        if (logMatcher.group("method").equals("in") && settings.isNotifyOnLogin()) {
+                            notifier.notify(playerName + " has logged in");
                         }
                     }
                 }
@@ -224,6 +232,15 @@ public class PmHighlightPlugin extends Plugin
     }
 
     /**
+     * Get the default value for login notifications
+     * @return boolean
+     */
+    public boolean getDefaultNotifyOnLogin()
+    {
+        return config.notifyOnLogin();
+    }
+
+    /**
      * Convert any Color to it's equivalent RGB HEX string.
      * @param color color
      * @return String RGB HEX string
@@ -299,6 +316,7 @@ public class PmHighlightPlugin extends Plugin
         settings.setNameHighlightEnabled(getDefaultNameHighlightSetting());
         settings.setMessageHighlightEnabled(getDefaultMessageHighlightSetting());
         settings.setLogHighlightEnabled(getDefaultLogNHighlightSetting());
+        settings.setNotifyOnLogin(getDefaultNotifyOnLogin());
 
         playerSettingsMap.put(name, settings);
         pluginPanel.rebuild();

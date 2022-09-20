@@ -15,4 +15,5 @@ public class PlayerSettings
     private boolean nameHighlightEnabled;
     private boolean messageHighlightEnabled;
     private boolean logHighlightEnabled;
+    private boolean notifyOnLogin;
 }
