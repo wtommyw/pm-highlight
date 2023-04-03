@@ -102,7 +102,7 @@ public class PlayerSettingsPanel extends JPanel
         constraints.gridy++;
 
         JLabel colorTile = new JLabel("Colors");
-        colorTile.setBorder(new EmptyBorder(10, 0, 5, 5));
+        colorTile.setBorder(new EmptyBorder(10, 5, 5, 5));
         panel.add(colorTile, constraints);
         constraints.gridy++;
 
@@ -180,7 +180,7 @@ public class PlayerSettingsPanel extends JPanel
         JPanel colorPanel = new JPanel(new GridLayout(3, 2, 8, 8));
         colorPanel.setBackground(ColorScheme.DARKER_GRAY_COLOR);
 
-        nameColorLabel.setText("Name color:");
+        nameColorLabel.setText("Name:");
         nameColorIndicator.setText(settings.getNameColor());
         nameColorIndicator.setForeground(Color.WHITE);
         nameColorIndicator.setBackground(Color.decode(settings.getNameColor()));
@@ -198,7 +198,7 @@ public class PlayerSettingsPanel extends JPanel
         colorPanel.add(nameColorIndicator);
 
         // Message color picker
-        messageColorLabel.setText("Message color:");
+        messageColorLabel.setText("Message:");
         messageColorIndicator.setText(settings.getMessageColor());
         messageColorIndicator.setForeground(Color.WHITE);
         messageColorIndicator.setBackground(Color.decode(settings.getMessageColor()));
@@ -215,7 +215,7 @@ public class PlayerSettingsPanel extends JPanel
         colorPanel.add(messageColorIndicator);
 
         // Log in/out message color
-        logColorLabel.setText("Log message color:");
+        logColorLabel.setText("Log message:");
         logColorIndicator.setText(settings.getLogColor());
         logColorIndicator.setForeground(Color.WHITE);
         logColorIndicator.setBackground(Color.decode(settings.getLogColor()));
