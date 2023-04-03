@@ -50,6 +50,9 @@ public class PmHighlightPlugin extends Plugin
     @Inject
     private Notifier notifier;
 
+    @Inject
+    private Gson gson;
+
 
     @Getter
     private final HashMap<String, PlayerSettings> playerSettingsMap = new HashMap();
@@ -275,8 +278,7 @@ public class PmHighlightPlugin extends Plugin
         if (playerSettingsMap.isEmpty()) {
             configManager.unsetConfiguration(CONFIG_GROUP_NAME, CONFIG_KEY);
         } else {
-            Gson gson = new Gson();
-            String json = gson.toJson(playerSettingsMap);
+            String json = this.gson.toJson(playerSettingsMap);
             configManager.setConfiguration(CONFIG_GROUP_NAME, CONFIG_KEY, json);
         }
     }
@@ -289,9 +291,7 @@ public class PmHighlightPlugin extends Plugin
     {
         playerSettingsMap.clear();
 
-        Gson gson = new Gson();
-        Map<String, PlayerSettings> list = gson.fromJson(json, new TypeToken<HashMap<String, PlayerSettings>>() {}.getType());
-
+        Map<String, PlayerSettings> list = this.gson.fromJson(json, new TypeToken<HashMap<String, PlayerSettings>>() {}.getType());
         if ( list != null ) {
             for (String key : list.keySet()) {
                 playerSettingsMap.put(key, list.get(key));
